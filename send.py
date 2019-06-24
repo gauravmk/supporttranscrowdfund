@@ -19,7 +19,7 @@ def is_paypal_url(url):
   return get_url_domain(url) == 'paypal.me'
 
 def is_valid_url(url):
-  return get_url_domain(url) in ['cash.app', 'cash.me']
+  return get_url_domain(url) in ['cash.app', 'cash.me', 'paypal.me']
 
 def send_tweet():
   twitter_client = twitter.Api(
