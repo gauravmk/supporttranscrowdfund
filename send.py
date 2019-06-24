@@ -31,7 +31,7 @@ def send_tweet():
 
   twilio_client = Client(os.environ['TWILIO_ACCOUNT_SID'], os.environ['TWILIO_AUTH_TOKEN'])
 
-  search = twitter_client.GetSearch("#transcrowdfund -filter:nativeretweets", result_type="recent", include_entities=True)
+  search = twitter_client.GetSearch("#transcrowdfund -filter:nativeretweets", result_type="recent", count=50, include_entities=True)
 
   relevant_tweets = [t for t in search if any([is_valid_url(u) for u in t.urls])]
 
