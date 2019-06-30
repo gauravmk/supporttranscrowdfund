@@ -21,7 +21,7 @@ def all_eligible_tweets():
 
     eligible = []
     for t in search:
-        url = next(u for u in t.urls if _is_valid_url(u), None),
+        url = next((u for u in t.urls if _is_valid_url(u)), None),
         if url:
             eligible.append({
                 "text": _strip_text(t.full_text),
