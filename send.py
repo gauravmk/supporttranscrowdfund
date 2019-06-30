@@ -26,7 +26,7 @@ def send_tweet(user, tweet):
 
 def _send_impl(body, number):
     twilio_client.messages.create(
-        body=body
+        body=body,
         from_=os.environ['TWILIO_PHONE_NUMBER'],
         to=number)
 
