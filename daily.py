@@ -6,7 +6,7 @@ import random
 
 
 def send_tweets():
-    all_tweets = all_eligible_tweets():
+    all_tweets = all_eligible_tweets()
     weekday = datetime.datetime.today().weekday()
     if weekday == 0:
         all_users = User.query.all()
