@@ -1,59 +1,32 @@
-import twitter
-import re
 import random
-import requests
 import os
-from urllib.parse import urlparse, quote
+import time
 from twilio.rest import Client
+from tweets import all_eligible_tweets, format_url
 
-AMOUNT = 20
+twilio_client = Client(
+    os.environ['TWILIO_ACCOUNT_SID'],
+    os.environ['TWILIO_AUTH_TOKEN'])
 
-def get_url_domain(url):
-  parsed = urlparse(url.expanded_url)
-  return parsed.netloc.lower().replace("www.", "")
+def send_welcome_text(user):
+    body = "Thank you for joining Support #transcrowdfund. Reply STOP at any time to stop receiving notifications. You can update settings by refilling the form on http://supporttranscrowdfund.com. Here's an immediate tweet to get you started."
+    _send_impl(body, user.phone_number)
 
-def is_cash_app_url(url):
-  return get_url_domain(url) in ['cash.app', 'cash.me']
+    time.sleep(2)
 
-def is_paypal_url(url):
-  return get_url_domain(url) == 'paypal.me'
+    tweet = random.choice(all_eligible_tweets())
+    send_tweet(user, tweet)
 
-def is_valid_url(url):
-  return get_url_domain(url) in ['cash.app', 'cash.me', 'paypal.me']
+def send_update_text(user):
+    _send_impl("Your account has been updated. Thank you for your support, it makes a real difference.", user.phone_number)
 
-def send_tweet():
-  twitter_client = twitter.Api(
-      consumer_key=os.environ['TWITTER_CONSUMER_KEY'],
-      consumer_secret=os.environ['TWITTER_CONSUMER_SECRET'],
-      access_token_key=os.environ['TWITTER_ACCESS_TOKEN_KEY'],
-      access_token_secret=os.environ['TWITTER_ACCESS_TOKEN_SECRET'],
-      tweet_mode='extended')
+def send_tweet(user, tweet):
+    body = "{} {}".format(tweet['text'], format_url(tweet['url']))
+    _send_impl(body, user.phone_number)
 
-  twilio_client = Client(os.environ['TWILIO_ACCOUNT_SID'], os.environ['TWILIO_AUTH_TOKEN'])
-
-  search = twitter_client.GetSearch("#transcrowdfund -filter:nativeretweets", result_type="recent", count=50, include_entities=True)
-
-  relevant_tweets = [t for t in search if any([is_valid_url(u) for u in t.urls])]
-
-  eligible = []
-  for t in relevant_tweets:
-    stripped_text = re.sub('https://t.co/\w+', '', t.full_text).replace("\n", " ")
-    stripped_text = re.sub('\s+', ' ', stripped_text)
-    url = next(u for u in t.urls if is_valid_url(u))
-    if is_paypal_url(url):
-      parsed = urlparse(url.expanded_url)
-      username = parsed.path[1:]
-      url = "https://www.paypal.com/myaccount/transfer/send/external/ppme?profile={}&currencyCode=USD&amount={}&locale.x=en_US&country.x=US&flowType=send".format(username, AMOUNT)
-      r = requests.post("https://api-ssl.bitly.com/v4/shorten", headers={"Authorization": "Bearer "+os.environ["BITLY_AUTH_TOKEN"]}, json={"long_url": url})
-      url = r.json()['link']
-    elif is_cash_app_url(url):
-      url = "{}/{}".format(url.expanded_url, AMOUNT)
-    else:
-      url = url.expanded_url
-    eligible.append("{} {}".format(stripped_text, url))
-
-  twilio_client.messages.create(body=random.choice(eligible), from_=os.environ['TWILIO_PHONE_NUMBER'], to="+14157067865")
-
-if __name__== "__main__":
-  send_tweet()
+def _send_impl(body, number):
+    twilio_client.messages.create(
+        body=body
+        from_=os.environ['TWILIO_PHONE_NUMBER'],
+        to=number)
 
