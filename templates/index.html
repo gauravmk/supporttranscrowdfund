@@ -141,7 +141,7 @@
     <p>I came across <a href="https://www.vox.com/identities/2019/6/22/18700875/lgbtq-good-ally">this piece</a> on Vox about effective allyship where I found the above quote. Paying people over the internet is the most convenient thing ever, and clearly very useful for those individuals. But despite the excessive convenience, I naturally had to make it even easier for myself to ensure I kept up the habit.</p> 
     <p>So I hacked together a little script that would pull tweets from twitter, parse out the paypal.me / cash.app links to create urls that prefill the amount I want to donate. Lastly, I have the script text me the tweet and the prefill link to my phone at 10am each morning. It means my lazy ass gets a text each morning and I'm 1-2 clicks away from supporting someone who's asking. It requires no brainpower and takes me less than a minute each morning.</p>
     <p>I've found it useful, so I figured I should probably let other people use it too. I included some lightly modified texts I've received from the script so far. If you also want to get texts like these, you can fill out the form below.</p>
-    <div class="row">
+    <div style="margin-top: 40px;" class="row">
       <div class="col-md-6">
         <div id="chat-thread" class="chat-thread frame">
           <p class="from-them">#TransCrowdfund #Pride hey im a trans lesbian who finally got a job again after 4 months. i havent started yet and i wont be able afford rent. i need $75 by the 26th in order to not get kicked out. please help by rting or donating. thank you <a>http://bit.ly/sample</a></p>
@@ -180,6 +180,19 @@
         </form>
       </div>
     </div>
+    <p>Couple useful details:</p>
+    <small>
+      I only pull tweets that link to a paypal.me account or a cash.app account. This is because those were the links where I could easily prefill all information, making them one-click submits. Stripe's cash app is only available via a native mobile app so you will have to download that from the app store and set up an account there. For the paypal links, you'll need a paypal account with payment options set up. Those are the big one-time setup tasks.
+    </small>
+    <small>
+      This does leave out a bunch of people who post GoFundMe links, as well as some smaller services like ko-fi.com. It also doesn't handle folx who don't directly include the donate link in their tweet (either by just putting the username in text or by retweeting an older tweet that contains the link). The only reason for leaving these out is to get to an MVP in people's hands as quickly as possible.
+    </small>
+    <small>
+      This does leave out a bunch of people who post GoFundMe links, as well as some smaller services like ko-fi.com. It also doesn't handle folx who don't directly include the donate link in their tweet (either by just putting the username in text or by retweeting an older tweet that contains the link). The only reason for leaving these out is to get to an MVP in people's hands as quickly as possible.
+    </small>
+    <small>
+      If you feel passionate about feature requests, please email me at <a href="mailto:gaurav@gauravkulkarni.com">gaurav@gauravkulkarni.com</a>. You can also check out the code and add issues on github
+    </small>
   </div>
 </div>
 {% endblock %}
