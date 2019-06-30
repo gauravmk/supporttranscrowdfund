@@ -5,11 +5,20 @@
 {{super()}}
 <style type="text/css" rel="stylesheet">
   div, body {
-    background-color: #F6CAD4 !important;
+    background-color: #F6CAD4;
   }
 
-  h1 {
-    color: #12BAF8 !important;
+  body .container .jumbotron {
+    background-color: #F6CAD4;
+  }
+
+  #amount {
+    line-height: 24px;
+    width: 100%;
+  }
+
+  .container .jumbotron h1 {
+    color: #12BAF8;
     text-shadow: 1px 1px 1px #04678B;
   }
 
@@ -158,7 +167,15 @@
             {% endfor %}
             </div>
           </div>
-          {{ wtf.form_field(form.amount, form_type="horizontal", horizontal_columns=('lg', 4, 8)) }}
+          <div class="form-group required">
+            <label class="control-label col-lg-4" for="amount">Amount</label>
+            <div class="col-lg-8">
+              <div class="input-group">
+                <div class="input-group-addon">$</div>
+                {{ form.amount() }}
+                <div class="input-group-addon">.00</div>
+            </div>
+          </div>
           <button type="submit" class="submit-btn btn btn-default">Submit</button>
         </form>
       </div>

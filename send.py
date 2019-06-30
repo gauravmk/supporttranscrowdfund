@@ -16,12 +16,15 @@ def send_welcome_text(user):
 
     tweet = random.choice(all_eligible_tweets())
     send_tweet(user, tweet)
+    
+    # Let gaurav know someone new joined
+    _send_impl("New user subscribed", os.environ.get('GAURAVS_PHONE'))
 
 def send_update_text(user):
     _send_impl("Your account has been updated. Thank you for your support, it makes a real difference.", user.phone_number)
 
 def send_tweet(user, tweet):
-    body = "{} {}".format(tweet['text'], format_url(tweet['url']))
+    body = "{} {}".format(tweet['text'], format_url(tweet['url'], user))
     _send_impl(body, user.phone_number)
 
 def _send_impl(body, number):
