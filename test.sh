@@ -1,6 +1,6 @@
 #!/bin/bash
 
-flask run &
+flask shell &
 (sleep 10; exit 0) &
 
 wait -n 

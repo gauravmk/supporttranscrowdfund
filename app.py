@@ -5,6 +5,7 @@ from flask_bootstrap import Bootstrap
 from wtforms import StringField, IntegerField, SubmitField, RadioField
 from wtforms.validators import DataRequired, ValidationError
 from send import send_welcome_text, send_update_text
+import abcd
 import threading
 import phonenumbers
 import sqlalchemy
