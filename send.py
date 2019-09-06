@@ -1,6 +1,7 @@
 import random
 import os
 import time
+from app import normalize_phone
 from twilio.rest import Client
 from tweets import all_eligible_tweets, format_url
 
