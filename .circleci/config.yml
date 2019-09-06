@@ -48,7 +48,7 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            flask run
+            ./test.sh
 
       - store_artifacts:
           path: test-reports
