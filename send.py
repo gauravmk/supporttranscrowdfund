@@ -9,6 +9,7 @@ twilio_client = Client(
     os.environ['TWILIO_AUTH_TOKEN'])
 
 def send_welcome_text(user):
+    print(4)
     body = "Thank you for joining Support #transcrowdfund. Reply STOP at any time to stop receiving notifications. You can update settings by refilling the form on http://supporttranscrowdfund.com. Here's an immediate tweet to get you started."
     _send_impl(body, user.phone_number)
 
