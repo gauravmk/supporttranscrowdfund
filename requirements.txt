@@ -21,7 +21,7 @@ oauthlib==3.0.1
 phonenumbers==8.10.14
 psycopg2-binary==2.8.3
 pycodestyle==2.5.0
-PyJWT==1.7.1
+PyJWT==2.4.0
 PySocks==1.7.0
 python-dateutil==2.8.0
 python-editor==1.0.4
